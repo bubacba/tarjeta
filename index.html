@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GIULIANA 15 AÑOS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            background-image: url('/2.gif');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            margin: 20px auto;
+            max-width: 400px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        #countdown {
+            font-size: 30px;
+        }
+
+        #image {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        #audio {
+            margin: 20px 0;
+        }
+
+        input[type="text"],
+        input[type="radio"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        #submitBtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+        .giuli {
+          color: goldenrod;
+          font-family: cursive;
+          font-size: 80px;
+          margin-top: 20px;
+
+        }
+        p { 
+          text-align: center;
+          font-size: 30px;
+          color: white;
+        }
+        label {color: white;}
+        
+        #audio {
+            display: none; /* Ocultar el reproductor de audio */
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="giuli">GIULIANA 15 AÑOS</h1>
+        <div id="countdown"></div>
+        <!-- <img id="image" src="tu_imagen.jpg" alt="Imagen de Giuliana">!-->
+        <audio autoplay id="audio"> 
+          <source src="/rmx.mp3" type="audio/mpeg">
+          Tu navegador no soporta el elemento de audio.
+      </audio>
+        <p>Nombre:</p>
+        <input type="text" id="nombre">
+        <p>Apellido:</p>
+        <input type="text" id="apellido">
+        <p>Asistiré:</p>
+        <label>
+            <input type="radio" name="asistencia" value="si">Sí
+        </label>
+        <label>
+            <input type="radio" name="asistencia" value="no">No
+        </label>
+        <div>
+            <button id="submitBtn" onclick="enviarDatos()">Enviar por WhatsApp</button>
+        </div>
+    </div>
+
+    <p>Viernes 13 de Octubre</p>
+    <p>21 hs</p>
+    <p>En la coqueta - Ruta 19 Km 316</p>
+    <script>
+        // Función para la cuenta regresiva
+        function countdown() {
+            const targetDate = new Date("2023-10-13T21:00:00").getTime();
+            const countdownElement = document.getElementById("countdown");
+
+            const interval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    countdownElement.innerHTML = "¡Ha llegado el día!";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }, 1000);
+        }
+
+        // Llamada a la función de la cuenta regresiva
+        countdown();
+
+        // Función para enviar los datos por WhatsApp
+        function enviarDatos() {
+            const nombre = document.getElementById("nombre").value;
+            const apellido = document.getElementById("apellido").value;
+            const asistencia = document.querySelector('input[name="asistencia"]:checked').value;
+
+            const mensaje = `Nombre: ${nombre}\nApellido: ${apellido}\nAsistencia: ${asistencia}`;
+
+            // Reemplaza '5493518177137' con el número de WhatsApp de destino
+            const numeroDestino = '5493512366908';
+            const linkWhatsApp = `https://api.whatsapp.com/send?phone=${numeroDestino}&text=${encodeURIComponent(mensaje)}`;
+
+            // Abre la ventana de WhatsApp con los datos completados
+            window.open(linkWhatsApp, '_blank');
+        }
+    </script>
+</body>
+
+</html>
